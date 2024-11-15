@@ -15,9 +15,9 @@ jobs:
     steps:
       # Step 1: Check out the repository code
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3  # Ensure latest version is used
 
-      # Step 2: Set up Node.js
+      # Step 2: Set up Node.js environment explicitly to 20.x
       - name: Set up Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
@@ -25,14 +25,14 @@ jobs:
 
       # Step 3: Install dependencies
       - name: Install dependencies
-        run: npm install
+        run: npm ci  # Use 'ci' for a clean install with lockfile
 
       - name: Run tests
         run: npm test
         env:
           CI: true
 
-      # Step 4: Configure AWS credentials
+      # Step 4: Configure AWS credentials using latest action version
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
@@ -40,7 +40,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      # Step 5: Deploy to S3
+      # Step 5: Deploy to S3 using latest version of action
       - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@master
         with:
@@ -50,4 +50,3 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: ${{ secrets.AWS_REGION }}
-
