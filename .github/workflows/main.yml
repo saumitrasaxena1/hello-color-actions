@@ -3,17 +3,14 @@ name: Deploy to S3
 on:
   push:
     branches:
-      - main  # Triggers the workflow when code is pushed to the 'main' branch
-  pull_request:
-    branches:
-      - main  # Optionally, trigger on pull requests to 'main'
+      - main
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [20.x]
+        node-version: [20.x]  # Explicitly set Node.js version to 20.x
 
     steps:
       # Step 1: Check out the repository code
